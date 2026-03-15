@@ -1,7 +1,7 @@
 // src/app/layout.tsx
-
 import type { Metadata } from 'next'
-import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css'
+import { ClerkProvider } from '@clerk/nextjs'
+import 'maplibre-gl/dist/maplibre-gl.css'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -9,14 +9,12 @@ export const metadata: Metadata = {
   description: 'Tools interaktif untuk membuat, mengelola, dan mensimulasikan area geofencing.',
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="id">
-      <body>{children}</body>
-    </html>
+    
+      <html lang="id">
+        <body><ClerkProvider>{children}</ClerkProvider></body>
+      </html>
+    
   )
 }

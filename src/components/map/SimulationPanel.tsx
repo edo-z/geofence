@@ -52,7 +52,7 @@ export function SimulationPanel() {
       {/* Header */}
       <div className="px-4 py-3 border-b border-gray-100">
         <p className="text-sm font-medium text-gray-800">Research tools</p>
-        <p className="text-[10px] text-gray-400 mt-0.5">Powered by Turf.js</p>
+        
       </div>
 
       {/* Tabs */}

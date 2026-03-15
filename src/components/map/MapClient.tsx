@@ -14,12 +14,14 @@ import { SimulationPanel } from './SimulationPanel'
 import { ExportPanel } from './ExportPanel'
 import { pointInGeofences } from '@/lib/geo/analysis'
 import type { IGeofence } from '@/types/geofence'
+import { SignOutButton } from '@clerk/nextjs'
+import Link from 'next/link'
 
 const MAPTILER_KEY = process.env.NEXT_PUBLIC_MAPTILER_KEY
 
 export function MapClient() {
   const mapContainer = useRef<HTMLDivElement>(null)
-  const mapRef       = useRef<maplibregl.Map | null>(null)
+  const mapRef = useRef<maplibregl.Map | null>(null)
   const [mapReady, setMapReady] = useState(false)
   const [draftCoords, setDraftCoords] = useState<number[][][] | null>(null)
 
@@ -60,18 +62,18 @@ export function MapClient() {
       style: MAPTILER_KEY
         ? `https://api.maptiler.com/maps/streets-v2/style.json?key=${MAPTILER_KEY}`
         : {
-            version: 8,
-            sources: {
-              osm: {
-                type: 'raster',
-                tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],
-                tileSize: 256,
-                maxzoom: 19,
-                attribution: '© OpenStreetMap contributors',
-              },
+          version: 8,
+          sources: {
+            osm: {
+              type: 'raster',
+              tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],
+              tileSize: 256,
+              maxzoom: 19,
+              attribution: '© OpenStreetMap contributors',
             },
-            layers: [{ id: 'osm', type: 'raster', source: 'osm' }],
           },
+          layers: [{ id: 'osm', type: 'raster', source: 'osm' }],
+        },
       center: mapCenter,
       zoom: mapZoom,
       maxZoom: 19,
@@ -87,7 +89,7 @@ export function MapClient() {
       const lngLat: [number, number] = [e.lngLat.lng, e.lngLat.lat]
       setTestPoint(lngLat)
       const currentZones = useMapStore.getState().zones
-      const activeMode   = useMapStore.getState().activeDrawMode
+      const activeMode = useMapStore.getState().activeDrawMode
       if (activeMode && activeMode !== 'select') return
       const result = pointInGeofences(lngLat, currentZones)
       setSimulationResult(result)
@@ -120,7 +122,7 @@ export function MapClient() {
     <div className="relative w-full h-full flex">
 
       {/* ── Left sidebar ── */}
-      <div className="w-56 flex-shrink-0 bg-white border-r border-gray-100 flex flex-col z-10">
+      <div className="w-56 shrink-0 bg-white border-r border-gray-100 flex flex-col z-10">
         <div className="px-4 py-3 border-b border-gray-100 flex items-center gap-2">
           <div className="w-2 h-2 rounded-full bg-teal-500" />
           <span className="text-sm font-medium text-gray-800">GeoResearch</span>
@@ -137,6 +139,7 @@ export function MapClient() {
           <ExportPanel captureMap={captureMap} />
         </div>
 
+
         {/* Koordinat kursor */}
         <div className="mt-auto px-4 py-3 border-t border-gray-100 bg-gray-50">
           <p className="text-[10px] text-gray-400 mb-0.5">Cursor</p>
@@ -146,6 +149,7 @@ export function MapClient() {
               : '—'}
           </p>
         </div>
+
       </div>
 
       {/* ── Map ── */}
