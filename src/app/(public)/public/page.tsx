@@ -402,10 +402,6 @@ export default function LandingPage() {
       {/* ── Hero ── */}
       <section className="hero">
         <div>
-          <div className="hero-badge">
-            <div className="hero-badge-dot" />
-            Geofencing Research Platform
-          </div>
           <h1 className="hero-title">
             Draw zones.<br />
             <em>Simulate</em> boundaries.<br />
