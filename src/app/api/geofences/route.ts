@@ -26,18 +26,19 @@ export async function POST(req: NextRequest) {
     const body = await req.json()
 
     const zone = await Geofence.create({
-      name: body.name,
-      category: body.category ?? 'custom',
+      name:        body.name,
+      category:    body.category    ?? 'custom',
       description: body.description ?? '',
-      location: body.location, // GeoJSON Polygon
-      color: body.color ?? '#1D9E75',
+      location:    body.location,
+      color:       body.color       ?? '#1D9E75',
+      notifPhone:  body.notifPhone  ?? '',        // ← tambahkan
+      notifActive: body.notifActive ?? false,     // ← tambahkan
     })
 
     return NextResponse.json({ success: true, data: zone }, { status: 201 })
   } catch (error: unknown) {
     console.error('[POST /api/geofences]', error)
-    const msg =
-      error instanceof Error ? error.message : 'Gagal menyimpan geofence'
+    const msg = error instanceof Error ? error.message : 'Gagal menyimpan geofence'
     return NextResponse.json({ success: false, error: msg }, { status: 400 })
   }
 }

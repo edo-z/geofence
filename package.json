@@ -14,7 +14,8 @@
     "@turf/buffer": "^7.3.4",
     "@turf/helpers": "^7.3.4",
     "@turf/turf": "^7.3.4",
-    "axios": "^1.13.6",
+    "axios": "^1.14.0",
+    "geojson-polygon-self-intersections": "^3.0.0",
     "html2canvas": "^1.4.1",
     "jspdf": "^4.2.0",
     "maplibre-gl": "^5.20.1",
@@ -23,6 +24,7 @@
     "next": "16.1.6",
     "react": "19.2.3",
     "react-dom": "19.2.3",
+    "wasenderapi": "^0.4.0",
     "zustand": "^5.0.11"
   },
   "devDependencies": {

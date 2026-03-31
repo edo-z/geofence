@@ -21,7 +21,6 @@ const GeofenceSchema = new Schema<IGeofence>(
       maxlength: [500, 'Deskripsi maksimal 500 karakter'],
       default: '',
     },
-    // GeoJSON Polygon — format standar MongoDB geospatial
     location: {
       type: {
         type: String,
@@ -29,7 +28,7 @@ const GeofenceSchema = new Schema<IGeofence>(
         required: true,
       },
       coordinates: {
-        type: [[[Number]]], // Array of rings, each ring is array of [lng, lat] pairs
+        type: [[[Number]]],
         required: true,
       },
     },
@@ -37,14 +36,23 @@ const GeofenceSchema = new Schema<IGeofence>(
       type: String,
       default: '#1D9E75',
     },
+    // ── Notifikasi ──
+    notifPhone: {
+      type: String,
+      default: '',
+      validate: {
+        validator: (v: string) => !v || /^62\d{9,13}$/.test(v),
+        message: 'Format nomor harus diawali 62 (contoh: 6281234567890)',
+      },
+    },
+    notifActive: {
+      type: Boolean,
+      default: false,
+    },
   },
-  {
-    timestamps: true, // createdAt + updatedAt otomatis
-  }
+  { timestamps: true }
 )
 
-// Index 2dsphere — wajib untuk query geospatial MongoDB ($geoWithin, $geoIntersects)
 GeofenceSchema.index({ location: '2dsphere' })
 
-// Hindari model recompile saat hot reload Next.js
 export const Geofence = models.Geofence || model<IGeofence>('Geofence', GeofenceSchema)
